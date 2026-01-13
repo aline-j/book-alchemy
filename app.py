@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import os
-from data_models import db, Author
+from data_models import db, Author, Book
 from datetime import datetime
 
 
@@ -25,6 +25,10 @@ def add_author():
         birthdate_str = request.form.get("birthdate")
         death_date_str = request.form.get("date_of_death")
 
+        if not name or name.strip() == "":
+            flash("Author name is required.", "danger")
+            return render_template("add_author.html")
+
         birthdate = (
             datetime.strptime(birthdate_str, "%Y-%m-%d").date()
             if birthdate_str else None
@@ -48,6 +52,35 @@ def add_author():
         return redirect(url_for("add_author"))
 
     return render_template("add_author.html")
+
+
+@app.route("/add_book", methods=["GET", "POST"])
+def add_book():
+    authors = Author.query.order_by(Author.name).all()
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        isbn = request.form.get("isbn")
+        publication_year_str = request.form.get("publication_year")
+        author_id = int(request.form.get("author_id"))
+
+        publication_year = int(
+            publication_year_str) if publication_year_str else None
+
+        book = Book(
+            title=title,
+            isbn=isbn,
+            publication_year=publication_year,
+            author_id=author_id
+        )
+
+        db.session.add(book)
+        db.session.commit()
+
+        flash(f"Book '{title}' successfully added!", "success")
+        return redirect(url_for("add_book"))
+
+    return render_template("add_book.html", authors=authors)
 
 
 if __name__ == "__main__":

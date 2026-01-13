@@ -45,13 +45,8 @@
       color: white;
     }
 
-    .btn-primary {
-      background-color: #2563eb;
-    }
-
-    .btn-secondary {
-      background-color: #16a34a;
-    }
+    .btn-primary { background-color: #2563eb; }
+    .btn-secondary { background-color: #16a34a; }
 
     /* Search & sort */
     .controls {
@@ -70,7 +65,7 @@
     /* Book grid */
     .book-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 20px;
     }
 
@@ -86,12 +81,25 @@
 
     .book-card h3 {
       margin-top: 0;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
-    .book-card p {
+    .author {
       color: #555;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+    }
+
+    .meta {
+      font-size: 0.9em;
+      color: #444;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .rating {
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #f59e0b;
     }
 
     .card-actions {
@@ -99,18 +107,8 @@
       gap: 10px;
     }
 
-    .btn-danger {
-      background-color: #dc2626;
-      border: none;
-      color: white;
-      padding: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      flex: 1;
-    }
-
+    .btn-danger,
     .btn-gray {
-      background-color: #6b7280;
       border: none;
       color: white;
       padding: 8px;
@@ -119,9 +117,10 @@
       flex: 1;
     }
 
-    form {
-      margin: 0;
-    }
+    .btn-danger { background-color: #dc2626; }
+    .btn-gray { background-color: #6b7280; }
+
+    form { margin: 0; }
   </style>
 </head>
 <body>
@@ -156,9 +155,27 @@
   <div class="book-grid">
     {% for book in books %}
     <div class="book-card">
+
       <div>
         <h3>{{ book.title }}</h3>
-        <p>by {{ book.author.name }}</p>
+        <div class="author">by {{ book.author.name }}</div>
+
+        <div class="meta">
+          {% if book.isbn %}
+            ISBN: {{ book.isbn }}<br>
+          {% endif %}
+          {% if book.publication_year %}
+            Year: {{ book.publication_year }}
+          {% endif %}
+        </div>
+
+        {% if book.rating %}
+        <div class="rating">
+          {% for i in range(book.rating) %}★{% endfor %}
+          {% for i in range(10 - book.rating) %}☆{% endfor %}
+          ({{ book.rating }}/10)
+        </div>
+        {% endif %}
       </div>
 
       <div class="card-actions">
@@ -176,6 +193,7 @@
           </button>
         </form>
       </div>
+
     </div>
     {% endfor %}
   </div>

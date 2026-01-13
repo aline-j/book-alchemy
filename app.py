@@ -88,15 +88,18 @@ def add_book():
         isbn = request.form.get("isbn")
         publication_year_str = request.form.get("publication_year")
         author_id = int(request.form.get("author_id"))
+        rating_str = request.form.get("rating")
 
         publication_year = int(
             publication_year_str) if publication_year_str else None
+        rating = int(rating_str) if rating_str else None
 
         book = Book(
             title=title,
             isbn=isbn,
             publication_year=publication_year,
-            author_id=author_id
+            author_id=author_id,
+            rating=rating
         )
 
         db.session.add(book)

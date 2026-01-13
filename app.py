@@ -18,6 +18,20 @@ with app.app_context():
     db.create_all()
 
 
+@app.route("/")
+def home():
+    sort = request.args.get("sort", "title")
+
+    query = Book.query.join(Author)
+
+    if sort == "author":
+        books = query.order_by(Author.name).all()
+    else:
+        books = query.order_by(Book.title).all()
+
+    return render_template("home.html", books=books, sort=sort)
+
+
 @app.route("/add_author", methods=["GET", "POST"])
 def add_author():
     if request.method == "POST":

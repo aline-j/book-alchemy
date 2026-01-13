@@ -15,6 +15,12 @@
       </select>
     </form>
 
+    <!-- Search -->
+    <form method="GET" action="/">
+      <input type="text" name="q" placeholder="Search books..." value="{{ keyword }}">
+      <button type="submit">Search</button>
+    </form>
+
     {% for book in books %}
     <div><h3>{{ book.title }}</h3></div>
     {% endfor %}

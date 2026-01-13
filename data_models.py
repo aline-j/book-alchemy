@@ -11,7 +11,8 @@ class Author(db.Model):
     birth_date = db.Column(db.Date)
     date_of_death = db.Column(db.Date)
 
-    books = db.relationship("Book", backref="author", lazy=True)
+    books = db.relationship("Book", backref="author",
+                            cascade="all, delete", lazy=True)
 
     def __str__(self):
         return f"Author(id={self.id}, name={self.name})"

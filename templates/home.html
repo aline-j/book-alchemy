@@ -6,11 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
   </head>
   <body>
+    <!-- Sort -->
+    <form method="GET">
+      <label for="sort">Sort by:</label>
+      <select name="sort" id="sort" onchange="this.form.submit()">
+        <option value="title" {% if sort == "title" %}selected{% endif %}>Title</option>
+        <option value="author" {% if sort == "author" %}selected{% endif %}>Author</option>
+      </select>
+    </form>
 
     {% for book in books %}
-    <div> <h3>{{ book.title }}</h3>
-    </div>
+    <div><h3>{{ book.title }}</h3></div>
     {% endfor %}
-
   </body>
 </html>

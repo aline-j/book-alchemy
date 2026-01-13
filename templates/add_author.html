@@ -1,22 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <title>Add Author</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 450px;
+        margin: 60px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 18px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #16a34a;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #16a34a;
+      }
+    </style>
   </head>
   <body>
+    <div class="container">
+      <h2>✍️ Add Author</h2>
 
-  <form action="/add_author" method="POST">
-  <label for="name">Author Name:</label> 
-  <input type="text" id="name" name="name" required><br><br>
-  
-  <label for="birthdate">Birthdate:</label> 
-  <input type="date" id="birthdate" name="birthdate" required><br><br> 
-  <label for="date_of_death">Date of Death:</label> 
-  <input type="date" id="date_of_death" name="date_of_death"><br><br>
-  <input type="submit" value="Add Author"> 
-  </form>
+      <form action="/add_author" method="POST">
+        <label for="name">Author Name</label>
+        <input type="text" id="name" name="name" required />
 
+        <label for="birthdate">Birthdate</label>
+        <input type="date" id="birthdate" name="birthdate" required />
+
+        <label for="date_of_death">Date of Death</label>
+        <input type="date" id="date_of_death" name="date_of_death" />
+
+        <button type="submit" class="btn">Add Author</button>
+      </form>
+
+      <a href="/" class="back-link">← Back to Library</a>
+    </div>
   </body>
 </html>

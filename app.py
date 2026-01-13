@@ -21,15 +21,26 @@ with app.app_context():
 @app.route("/")
 def home():
     sort = request.args.get("sort", "title")
+    keyword = request.args.get("q", "").strip()
 
     query = Book.query.join(Author)
+
+    if keyword:
+        search = f"%{keyword}%"
+        query = query.filter(
+            db.or_(
+                Book.title.ilike(search),
+                Author.name.ilike(search)
+            )
+        )
 
     if sort == "author":
         books = query.order_by(Author.name).all()
     else:
         books = query.order_by(Book.title).all()
 
-    return render_template("home.html", books=books, sort=sort)
+    return render_template("home.html",
+                           books=books, sort=sort, keyword=keyword)
 
 
 @app.route("/add_author", methods=["GET", "POST"])

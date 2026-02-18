@@ -32,3 +32,9 @@ class Book(db.Model):
 
     def __str__(self):
         return f"Book(id={self.id}, title={self.title})"
+
+    @property
+    def cover_url(self):
+        if self.isbn:
+            return f"https://covers.openlibrary.org/b/isbn/{self.isbn}-M.jpg"
+        return "/static/no-cover.png"

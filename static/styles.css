@@ -52,8 +52,8 @@ h1 {
   flex-wrap: wrap;
 }
 
-input,
-select {
+.controls input,
+.controls select {
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -139,4 +139,72 @@ form {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 60px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.add-book-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-book-back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #2563eb;
+}
+
+.add-author-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #16a34a;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-author-back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #16a34a;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }

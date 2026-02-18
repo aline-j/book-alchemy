@@ -51,8 +51,14 @@ def add_author():
         birthdate_str = request.form.get("birthdate")
         death_date_str = request.form.get("date_of_death")
 
-        if not name or name.strip() == "":
+        if not name:
             flash("Author name is required.", "danger")
+            return render_template("add_author.html")
+
+        # 🔎 1. Vorher prüfen
+        existing_author = Author.query.filter_by(name=name).first()
+        if existing_author:
+            flash("An author with this name already exists.", "danger")
             return render_template("add_author.html")
 
         birthdate = (
@@ -71,11 +77,15 @@ def add_author():
             date_of_death=date_of_death
         )
 
-        db.session.add(author)
-        db.session.commit()
+        try:
+            db.session.add(author)
+            db.session.commit()
+            flash(f"Author '{name}' successfully added!", "success")
+            return redirect(url_for("add_author"))
 
-        flash(f"Author '{name}' successfully added!", "success")
-        return redirect(url_for("add_author"))
+        except IntegrityError:
+            db.session.rollback()
+            flash("An author with this name already exists.", "danger")
 
     return render_template("add_author.html")
 

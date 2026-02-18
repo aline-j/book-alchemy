@@ -46,7 +46,7 @@ def home():
 @app.route("/add_author", methods=["GET", "POST"])
 def add_author():
     if request.method == "POST":
-        name = request.form.get("name")
+        name = request.form.get("name", "").strip()
         birthdate_str = request.form.get("birthdate")
         death_date_str = request.form.get("date_of_death")
 

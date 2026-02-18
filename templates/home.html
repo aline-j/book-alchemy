@@ -5,6 +5,7 @@
     <title>Digital Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </head>
   <body>
     <div class="container">
@@ -17,6 +18,18 @@
           <a href="/add_author" class="btn btn-secondary">+ Add Author</a>
         </div>
       </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-container">
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
 
       <!-- Search & Sort -->
       <div class="controls">

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 from data_models import db, Author, Book
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 
 
 app = Flask(__name__)
@@ -85,7 +86,7 @@ def add_book():
 
     if request.method == "POST":
         title = request.form.get("title")
-        isbn = request.form.get("isbn")
+        isbn = request.form.get("isbn") or None
         publication_year_str = request.form.get("publication_year")
         author_id = int(request.form.get("author_id"))
         rating_str = request.form.get("rating")
@@ -93,6 +94,12 @@ def add_book():
         publication_year = int(
             publication_year_str) if publication_year_str else None
         rating = int(rating_str) if rating_str else None
+
+        if isbn and Book.query.filter_by(isbn=isbn).first():
+            flash("A book with this ISBN already exists.", "danger")
+            return render_template("add_book.html", authors=authors)
+
+        isbn = isbn.replace("-", "").strip() if isbn else None
 
         book = Book(
             title=title,
@@ -102,11 +109,15 @@ def add_book():
             rating=rating
         )
 
-        db.session.add(book)
-        db.session.commit()
+        try:
+            db.session.add(book)
+            db.session.commit()
+            flash(f"Book '{title}' successfully added!", "success")
+            return redirect(url_for("add_book"))
 
-        flash(f"Book '{title}' successfully added!", "success")
-        return redirect(url_for("add_book"))
+        except IntegrityError:
+            db.session.rollback()
+            flash("A book with this ISBN already exists.", "danger")
 
     return render_template("add_book.html", authors=authors)
 
